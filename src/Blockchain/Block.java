@@ -23,32 +23,22 @@ public class Block {
         this.time = new Date().getTime();
         this.hash = calculateHash();
     }
+
     public String calculateHash() {
         return HashUtilities.SHA256(this.previousHash+time+nonce+merkleRoot);
     }
 
     public void mineBlock(int difficulty) {
+        merkleRoot = HashUtilities
     }
+
     public String calculateHashBlock() {
-        String dataToHash = previousHash + time + nonce + data;
-        MessageDigest messageDigest;
-        byte[] byteArray = null;
-
-        try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
-            byteArray = messageDigest.digest(dataToHash.getBytes(StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException ex) {
-            logger.log(Level.SEVERE, ex.getMessage());
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        assert byteArray != null;
-        for (byte b : byteArray) {
-            stringBuilder.append(String.format("%02x", b));
-        }
-
-        return stringBuilder.toString();
+        return HashUtilities.SHA256(previousHash+time+nonce+merkleRoot);
     }
+
+    public String getPreviousHash() {
+        return previousHash;
+    }
+
 
 }
