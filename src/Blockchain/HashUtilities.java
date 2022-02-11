@@ -2,6 +2,7 @@ package Blockchain;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 
 public class HashUtilities {
     public static String SHA256(String input) {
@@ -22,5 +23,14 @@ public class HashUtilities {
         } catch (Exception e) {
             throw new RuntimeException();
         }
+    }
+    public static String getMerkleRoot(ArrayList<Transaction> transactions) {
+        int count = transactions.size();
+        ArrayList<String> previousTreeLayer = new ArrayList<>();
+        for (Transaction transaction: transactions) {
+            previousTreeLayer.add("transaction.getId()");
+        }
+
+
     }
 }
