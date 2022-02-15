@@ -16,6 +16,8 @@ public class Transaction {
     }
     public void sign(PrivateKey key) {
         this.signature = HashTools.signTransaction(key,HashTools.StringToKey(sender)+HashTools.StringToKey(reciepient)+value);
-
+    }
+    public boolean verifiySignature(PublicKey key) {
+        return !HashTools.verifiyTransaction(key,HashTools.StringToKey(sender)+HashTools.StringToKey(reciepient)+value,signature);
     }
 }

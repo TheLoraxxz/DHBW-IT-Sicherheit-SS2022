@@ -1,10 +1,7 @@
 package Blockchain;
 
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.security.MessageDigest;
-import java.security.PrivateKey;
-import java.security.Signature;
+import java.security.*;
 import java.util.Base64;
 
 public class HashTools {
@@ -41,5 +38,16 @@ public class HashTools {
     }
     public static String StringToKey(Key key) {
         return Base64.getEncoder().encodeToString(key.getEncoded());
+    }
+
+    public static boolean verifiyTransaction(PublicKey key,String data, byte[] signature) {
+        try {
+            Signature toVerify = Signature.getInstance("ECDSA","BC");
+            toVerify.initVerify(key);
+            toVerify.update(data.getBytes(StandardCharsets.UTF_8));
+            return toVerify.verify(signature);
+        }catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 }
