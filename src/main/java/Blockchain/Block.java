@@ -13,7 +13,7 @@ public class Block {
     private String hash;
     private int nonce;
     private PublicKey miner;
-    private double minerReward;
+    private float minerReward;
 
     public Block(String previousHash) {
         this.previousHash = previousHash;
