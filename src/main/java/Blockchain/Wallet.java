@@ -15,7 +15,11 @@ public class Wallet {
     public HashMap<String,TransactionOutput> ownFunds = new HashMap<>();
 
     public Wallet() {
-        generateKeyPair();
+        this.generateKeyPair();
+    }
+    public Wallet(String name) {
+        this.name = name;
+        this.generateKeyPair();
     }
     private void generateKeyPair() {
         try {
@@ -27,8 +31,9 @@ public class Wallet {
             this.privatekey = pair.getPrivate();
             this.publicKey = pair.getPublic();
         } catch (Exception e) {
-            new RuntimeException();
+            e.printStackTrace();
         }
+
     }
     public Transaction sendFunds(PublicKey recipient, float value) {
         if (getBalance() < value) {

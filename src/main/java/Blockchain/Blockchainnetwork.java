@@ -1,10 +1,13 @@
 package Blockchain;
 
+import com.google.gson.Gson;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import java.io.File;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Blockchainnetwork {
@@ -19,13 +22,13 @@ public class Blockchainnetwork {
 
     public static Blockchainnetwork network;
     public Blockchainnetwork() {
+        Security.addProvider(new BouncyCastleProvider());
         network = this;
         miner.ensureCapacity(3);
         miner.add(new Miner("Bob"));
         miner.add(new Miner("Sam"));
         miner.add(new Miner("Eve"));
-        Wallet satoshi = new Wallet();
-
+        Wallet satoshi = new Wallet("Satoshi");
         this.genesisTransaction = new Transaction(satoshi.getPublicKey(), satoshi.getPublicKey(),1,null);
         this.genesisTransaction.generateSignature(satoshi.getPrivatekey());
         this.genesisTransaction.getOutputs().add(
@@ -50,7 +53,8 @@ public class Blockchainnetwork {
         this.chain.add(b);
         try {
             File f = new File("blockchain.json");
-            //TODO: Add JSON output of chain
+            String json = new Gson().toJson(this.chain);
+            System.out.println(json);
         }catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
