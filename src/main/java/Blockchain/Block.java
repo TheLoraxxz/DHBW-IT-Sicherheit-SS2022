@@ -13,7 +13,7 @@ public class Block {
     private String hash;
     private int nonce;
     private PublicKey miner;
-    private float minerReward;
+    private double minerReward;
 
     public Block(String previousHash) {
         this.previousHash = previousHash;
@@ -47,6 +47,7 @@ public class Block {
         }
 
         this.miner = key;
+        this.minerReward = Configuration.instance.reward;
         TransactionOutput minerreward = new TransactionOutput(key,Configuration.instance.reward,"BlockMined:"+merkleRoot+"-"+previousHash);
         Blockchainnetwork.getInstance().getUtx0Map().put(minerreward.getID(),minerreward);
 
@@ -65,5 +66,12 @@ public class Block {
         }
         this.transaction = transaction;
 
+    }
+    public PublicKey getMiner() {
+        return miner;
+    }
+
+    public double getMinerReward() {
+        return minerReward;
     }
 }

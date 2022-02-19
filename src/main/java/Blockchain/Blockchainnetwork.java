@@ -1,9 +1,11 @@
 package Blockchain;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +33,7 @@ public class Blockchainnetwork {
         Wallet satoshi = new Wallet("Satoshi");
         this.genesisTransaction = new Transaction(satoshi.getPublicKey(), satoshi.getPublicKey(),1,null);
         this.genesisTransaction.generateSignature(satoshi.getPrivatekey());
+        this.genesisTransaction.setId("0");
         this.genesisTransaction.getOutputs().add(
                 new TransactionOutput(this.genesisTransaction.getRecipient(),
                         this.genesisTransaction.getValue(),
@@ -52,9 +55,11 @@ public class Blockchainnetwork {
         m.mine(b);
         this.chain.add(b);
         try {
-            File f = new File("blockchain.json");
-            String json = new Gson().toJson(this.chain);
-            System.out.println(json);
+            FileWriter f = new FileWriter("blockchain.json");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(this.chain);
+            f.write(json);
+            f.close();
         }catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
