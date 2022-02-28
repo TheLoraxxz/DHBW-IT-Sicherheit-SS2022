@@ -1,2 +1,3 @@
 rootProject.name = 'DHBW-IT-Sicherheit2-SS2022'
+include 'Encryption'
 
