@@ -46,6 +46,10 @@ public class Runner {
         runner.start();
     }
 
+    public void stop() {
+        runner.interrupt();
+    }
+
     void deleteFiles() {
         File dir = new File(path);
         File[] fileArr = null;
