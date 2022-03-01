@@ -103,7 +103,7 @@ public class Cryptography {
                 cipher.init(Cipher.DECRYPT_MODE, secretKey, new GCMParameterSpec(TAG_LENGTH_BIT, nonce));
                 byte[] decContent = cipher.doFinal(content);
 
-                File decFile = Path.of(f.getAbsolutePath().substring(0, f.getName().lastIndexOf('.'))).toFile();
+                File decFile = Path.of(f.getAbsolutePath().substring(0, f.getAbsolutePath().lastIndexOf('.'))).toFile();
                 decFile.createNewFile();
 
                 FileOutputStream fout = new FileOutputStream(decFile);
