@@ -3,5 +3,9 @@ package Application;
 public enum ConfigurationApplication {
     instance;
 
-    double kursEURtoBTC = 0.000019;
+    private double kursEURtoBTC = 0.000019;
+
+    public double getKursEURtoBTC() {
+        return kursEURtoBTC;
+    }
 }

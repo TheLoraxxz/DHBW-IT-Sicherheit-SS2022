@@ -1,5 +1,6 @@
 package Konto;
 
+import Application.ConfigurationApplication;
 import Blockchain.Wallet;
 
 public class Bankonto {
@@ -24,5 +25,13 @@ public class Bankonto {
         System.out.print("Currebnt Balance: ");
         System.out.print(this.balance);
         System.out.println(" BTC");
+    }
+    public boolean decharge(double amount) {
+        if (amount>this.balance) {
+            return false;
+        } else {
+            this.balance= this.balance-amount;
+            return true;
+        }
     }
 }
