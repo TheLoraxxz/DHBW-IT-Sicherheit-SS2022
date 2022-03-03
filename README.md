@@ -5,3 +5,8 @@ flach unter /data einfügen --> dabei keien unterordner einfügen. Vielen Dank.
 
 # Nutzung
 - für HIlfe einfach `````help````` in die konsole eingeben
+
+
+# Aufteilung
+2447899 --> Blockchain / main Application
+4224693 --> Encryption / Decryption / Komplexaufgabe
