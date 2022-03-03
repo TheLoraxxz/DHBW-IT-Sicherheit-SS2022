@@ -22,9 +22,9 @@ public class Bankonto {
         System.out.print(victim.getBalance());
         System.out.println(" BTC");
 
-        System.out.print("Currebnt Balance: ");
+        System.out.print("Current Balance: ");
         System.out.print(this.balance);
-        System.out.println(" BTC");
+        System.out.println(" €");
     }
     public boolean decharge(double amount) {
         if (amount>this.balance) {
