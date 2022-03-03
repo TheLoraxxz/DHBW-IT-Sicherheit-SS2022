@@ -34,6 +34,7 @@ public class Transaction {
 
     public boolean verifySignature() {
         String data = StringUtility.getStringFromKey(sender) + StringUtility.getStringFromKey(recipient) + value;
+        StringUtility.document("Verifiying:"+StringUtility.getStringFromKey(sender)+"sends to"+StringUtility.getStringFromKey(recipient)+" in the value of:" +value+" result is: "+(!StringUtility.verifyECDSASig(sender, data, signature)? "true":"false"));
         return !StringUtility.verifyECDSASig(sender, data, signature);
 
     }

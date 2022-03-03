@@ -1,6 +1,10 @@
 package Blockchain;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
@@ -71,6 +75,13 @@ public class StringUtility {
         }
         catch(Exception e){
             return null;
+        }
+    }
+    public static void document(String text) {
+        try {
+            Files.writeString(Paths.get("events.log"), text.concat("\n"), StandardOpenOption.APPEND);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

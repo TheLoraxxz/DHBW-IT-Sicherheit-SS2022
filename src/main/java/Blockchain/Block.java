@@ -45,11 +45,12 @@ public class Block {
             nonce++;
            hash = calculateHash();
         }
-
+        StringUtility.document("mined Block"+this.hash);
         this.miner = key;
         this.minerReward = Configuration.instance.reward;
         TransactionOutput minerreward = new TransactionOutput(key,Configuration.instance.reward,"BlockMined:"+merkleRoot+"-"+previousHash);
         Blockchainnetwork.getInstance().getUtx0Map().put(minerreward.getID(),minerreward);
+        StringUtility.document("added Block to chain");
 
 
     }
