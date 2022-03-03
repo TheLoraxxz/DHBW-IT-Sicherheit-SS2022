@@ -62,8 +62,16 @@ public class Wallet {
 
         return transaction;
     }
-    public float getBalance() {
-        return 0;
+    public double getBalance() {
+        double total =0;
+        for (Map.Entry<String,TransactionOutput> item:Blockchainnetwork.getInstance().getUtx0Map().entrySet()) {
+            TransactionOutput utx0 = item.getValue();
+            if (utx0.isMine(publicKey)) {
+                ownFunds.put(utx0.getID(),utx0);
+                total += utx0.getValue();
+            }
+        }
+        return total;
     }
     public PublicKey getPublicKey() {
         return publicKey;

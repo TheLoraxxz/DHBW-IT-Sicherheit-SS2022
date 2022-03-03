@@ -1,6 +1,7 @@
 package Blockchain;
 
 import java.io.File;
+import java.nio.file.WatchKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class Blockchainnetwork {
     public HashMap<String, TransactionOutput> getUtx0Map() {
         return utx0Map;
     }
-
+    private Wallet satoshi;
     private HashMap<String, TransactionOutput> utx0Map = new HashMap<>();
 
     public static Blockchainnetwork network;
@@ -30,7 +31,7 @@ public class Blockchainnetwork {
         miner.add(new Miner("Bob"));
         miner.add(new Miner("Sam"));
         miner.add(new Miner("Eve"));
-        Wallet satoshi = new Wallet("Satoshi");
+        this.satoshi = new Wallet("Satoshi");
         this.genesisTransaction = new Transaction(satoshi.getPublicKey(), satoshi.getPublicKey(),1,null);
         this.genesisTransaction.generateSignature(satoshi.getPrivatekey());
         this.genesisTransaction.setId("0");
@@ -47,6 +48,7 @@ public class Blockchainnetwork {
     }
     public void addTransaction(Transaction transaction) {
         Block b = new Block(this.chain.get(this.chain.size()-1).getHash());
+        b.addTransaction(transaction);
         addBlockToChain(b);
     }
     private void addBlockToChain(Block b) {
@@ -66,6 +68,12 @@ public class Blockchainnetwork {
         }
 
 
+    }
+    public ArrayList<Miner> getMiner() {
+        return miner;
+    }
+    public Wallet getSatoshi() {
+        return satoshi;
     }
     public static Blockchainnetwork getInstance() {
         return Objects.requireNonNullElseGet(network, Blockchainnetwork::new);

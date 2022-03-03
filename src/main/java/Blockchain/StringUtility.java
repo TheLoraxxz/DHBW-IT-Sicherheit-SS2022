@@ -2,6 +2,7 @@ package Blockchain;
 
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -60,5 +61,16 @@ public class StringUtility {
 
     public static String getDifficultyString(int difficulty) {
         return new String(new char[difficulty]).replace('\0', '0');
+    }
+    public static PublicKey getKeyFromString(String key) {
+        try{
+            byte[] byteKey = Base64.getDecoder().decode(key.getBytes());
+            X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(byteKey);
+            KeyFactory kf = KeyFactory.getInstance("ECDSA", "BC");
+            return kf.generatePublic(X509publicKey);
+        }
+        catch(Exception e){
+            return null;
+        }
     }
 }
