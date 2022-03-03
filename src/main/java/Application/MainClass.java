@@ -100,6 +100,7 @@ public class MainClass {
                 System.out.println("'show recipient' - to get the Bitcoin adress of the attacker");
                 System.out.println("'pay <amount> BTC to <adress>' - Pay the required amount to the hacker");
                 System.out.println("'check payment' - to get your data back encrypted");
+                System.out.println("'exit' - to exit the program");
                 System.out.println();
                 System.out.println("The data you need to encrypt - pls put them without any dir in data");
                 System.out.println();

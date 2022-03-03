@@ -48,14 +48,21 @@ public class Blockchainnetwork {
     }
     public void addTransaction(Transaction transaction) {
         Block b = new Block(this.chain.get(this.chain.size()-1).getHash());
+        StringUtility.document("Structure: added Transaction "+transaction.getId());
         b.addTransaction(transaction);
         addBlockToChain(b);
     }
     private void addBlockToChain(Block b) {
         int random = ThreadLocalRandom.current().nextInt(0,2);
         Miner m = this.miner.get(random);
+        StringUtility.document("TX Broadcast: miner"+m.getName()+" has been selected");
         m.mine(b);
         this.chain.add(b);
+        if (checkChainvalidity()) {
+            StringUtility.document("Verification: verified block "+b.getHash());
+        }
+
+        StringUtility.document("added Block to chain");
         try {
             FileWriter f = new FileWriter("blockchain.json");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();

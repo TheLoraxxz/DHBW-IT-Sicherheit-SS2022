@@ -38,18 +38,21 @@ public class Block {
     }
 
     public void mineBlock(int difficulty,PublicKey key) {
-        this.merkleRoot = StringUtility.applySha256(transaction.getId()); //directly add Transaction because we have only one transaction
-        String target = StringUtility.getDifficultyString(difficulty);
+        if (this.transaction.verifySignature()) {
+            this.merkleRoot = StringUtility.applySha256(transaction.getId()); //directly add Transaction because we have only one transaction
+            String target = StringUtility.getDifficultyString(difficulty);
 
-        while (!hash.substring(0, difficulty).equals(target)) {
-            nonce++;
-           hash = calculateHash();
+            while (!hash.substring(0, difficulty).equals(target)) {
+                nonce++;
+                hash = calculateHash();
+            }
+            StringUtility.document("mined Block"+this.hash);
+            this.miner = key;
+            this.minerReward = Configuration.instance.reward;
+            TransactionOutput minerreward = new TransactionOutput(key,Configuration.instance.reward,"BlockMined:"+merkleRoot+"-"+previousHash);
+            Blockchainnetwork.getInstance().getUtx0Map().put(minerreward.getID(),minerreward);
         }
 
-        this.miner = key;
-        this.minerReward = Configuration.instance.reward;
-        TransactionOutput minerreward = new TransactionOutput(key,Configuration.instance.reward,"BlockMined:"+merkleRoot+"-"+previousHash);
-        Blockchainnetwork.getInstance().getUtx0Map().put(minerreward.getID(),minerreward);
 
 
     }
